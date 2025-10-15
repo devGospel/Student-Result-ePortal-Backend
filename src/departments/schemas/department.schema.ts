@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Schema()
@@ -8,9 +8,9 @@ export class Department extends Document {
   @Prop({ required: true, unique: true })
   name: string;
 
-  @ApiProperty({ description: 'Faculty name', example: 'Faculty of Science' })
-  @Prop()
-  faculty: string;
+  @ApiProperty({ description: 'Faculty ID', example: '670f7b3b9c8e4a2c3d4e5f6a' })
+  @Prop({ type: Types.ObjectId, ref: 'Faculty', required: true })
+  faculty: Types.ObjectId;
 
   @ApiProperty({ description: 'Head of Department', example: 'Dr. John Smith' })
   @Prop()

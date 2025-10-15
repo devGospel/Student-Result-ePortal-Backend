@@ -18,6 +18,10 @@ export class User {
   @Prop({ required: true })
   password: string;
 
+  @ApiProperty({ description: 'Role of the user', example: 'user', enum: ['user', 'admin'] })
+  @Prop({ required: true, enum: ['user', 'admin'], default: 'user' })
+  role: 'user' | 'admin';
+
   // Mongoose automatically adds _id, but we need to declare it for TypeScript
   _id: Types.ObjectId;
 }

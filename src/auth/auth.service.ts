@@ -13,7 +13,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(createUserDto: CreateUserDto): Promise<{ message: string; user: { id: string; email: string; name: string } }> {
+  async register(createUserDto: CreateUserDto): Promise<{ message: string; user: { id: string; email: string; name: string; role: 'user' | 'admin' } }> {
     try {
       const user = await this.usersService.create(createUserDto);
       const { password, ...userInfo } = user.toObject();
@@ -23,6 +23,7 @@ export class AuthService {
           id: userInfo._id.toString(),
           email: userInfo.email,
           name: userInfo.name,
+          role: userInfo.role,
         },
       };
     } catch (error) {
@@ -33,7 +34,7 @@ export class AuthService {
     }
   }
 
-  async login(loginDto: LoginDto): Promise<{ access_token: string; user: { id: string; email: string; name: string } }> {
+  async login(loginDto: LoginDto): Promise<{ access_token: string; user: { id: string; email: string; name: string; role: 'user' | 'admin' } }> {
     const { email, password } = loginDto;
 
     console.log(`Login attempt for email: ${email}`);
@@ -52,7 +53,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload = { sub: user._id.toString(), email: user.email, name: user.name };
+    const payload = { sub: user._id.toString(), email: user.email, name: user.name, role: user.role };
     const access_token = await this.jwtService.signAsync(payload);
 
     console.log(`JWT generated for email: ${email}`);
@@ -63,6 +64,7 @@ export class AuthService {
         id: user._id.toString(),
         email: user.email,
         name: user.name,
+        role: user.role,
       },
     };
   }

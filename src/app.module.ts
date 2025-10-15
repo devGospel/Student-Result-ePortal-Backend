@@ -8,6 +8,7 @@ import { DepartmentsModule } from './departments/departments.module';
 import { CoursesModule } from './courses/courses.module';
 import { ResultsModule } from './results/results.module';
 import { LoggerModule } from './auth/logger/logger.module';
+import { FacultiesModule } from './faculties/faculties.module';
 import { databaseConfig } from './config/db.config';
 import { RequestLoggerMiddleware } from './auth/middleware/request-logger.middleware';
 
@@ -25,6 +26,7 @@ import { RequestLoggerMiddleware } from './auth/middleware/request-logger.middle
     CoursesModule,
     ResultsModule,
     LoggerModule,
+    FacultiesModule,
   ],
 })
 export class AppModule implements NestModule {

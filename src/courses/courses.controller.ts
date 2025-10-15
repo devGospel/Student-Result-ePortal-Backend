@@ -4,13 +4,16 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateCourseDto } from './dtos/create-course.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 import { Course } from './schemas/course.schema';
+import { Roles } from '../auth/roles.decorator';
+import { RolesGuard } from '../auth/roles.guard';
 
 @ApiTags('courses')
 @Controller('courses')
 export class CoursesController {
   constructor(private coursesService: CoursesService) {}
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @Post()
   @UsePipes(new ValidationPipe())
   @ApiBearerAuth('JWT-auth')

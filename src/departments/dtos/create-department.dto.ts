@@ -6,7 +6,7 @@ export class CreateDepartmentDto {
   @IsString()
   name: string;
 
-  @ApiProperty({ description: 'Faculty name', example: 'Faculty of Science' })
+  @ApiProperty({ description: 'Faculty ID (MongoDB ObjectId)', example: '670f7b3b9c8e4a2c3d4e5f6a' })
   @IsString()
   faculty: string;
 
